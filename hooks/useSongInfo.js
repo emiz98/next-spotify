@@ -16,7 +16,6 @@ function useSongInfo() {
           .getTrack(currentTrackId)
           .then((data) => {
             setSongInfo(data.body)
-            console.log(data.body)
           })
           .catch((err) => console.log(err))
       }
