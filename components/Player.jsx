@@ -9,6 +9,7 @@ import {
   FastForwardIcon,
   ReplyIcon,
   VolumeUpIcon,
+  ChevronUpIcon,
 } from '@heroicons/react/solid'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
@@ -22,24 +23,35 @@ function Player() {
     useRecoilState(currentTrackIdState)
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState)
   const [volume, setVolume] = useState(50)
+  const [triggerImage, setTriggerImage] = useState(false)
 
   const songInfo = useSongInfo()
 
-  // console.log(volume)
+  const triggerAlbumImage = () => {
+    setTriggerImage(!triggerImage)
+  }
 
   return (
     <div
-      className="md-px-8 grid h-24 grid-cols-3 
-    bg-gradient-to-b from-black to-gray-900 px-2 text-xs
-    text-white md:text-base"
+      className="md-px-8 grid h-24 grid-cols-2 bg-gradient-to-b
+    from-black to-gray-900 px-2 text-xs text-white
+    md:grid-cols-3 md:text-base"
     >
       {/* left */}
       <div className="flex items-center space-x-4">
         <img
-          className="hidden h-10 w-10 object-cover md:inline"
+          className="w-1h-16 h-16 object-cover"
           src={songInfo?.album.images?.[0].url}
           alt=""
         />
+        {/* <div
+          onClick={triggerAlbumImage}
+          className="rounded-full bg-gray-800 p-1
+        transition duration-200 ease-in-out hover:bg-gray-500"
+        >
+          <ChevronUpIcon className="footerBtn" />
+        </div> */}
+
         <div>
           <h3>{songInfo?.name}</h3>
           <p className="text-gray-500">{songInfo?.artists?.[0]?.name}</p>
@@ -47,8 +59,8 @@ function Player() {
       </div>
 
       {/* center */}
-      <div className="flex items-center justify-evenly">
-        <SwitchHorizontalIcon className="footerBtn" />
+      <div className="flex items-center justify-center space-x-5">
+        <SwitchHorizontalIcon className="footerBtn hidden md:inline" />
         <RewindIcon className="footerBtn" />
         {isPlaying ? (
           <PauseIcon className="footerBtn footerMidBtn" />
@@ -56,13 +68,13 @@ function Player() {
           <PlayIcon className="footerBtn footerMidBtn" />
         )}
         <FastForwardIcon className="footerBtn" />
-        <ReplyIcon className="footerBtn" />
+        <ReplyIcon className="footerBtn hidden md:inline" />
       </div>
 
       {/* right */}
       <div
-        className="flex items-center justify-end space-x-3 
-      pr-5 md:space-x-4"
+        className="flex hidden items-center justify-end 
+      space-x-3 pr-5 md:inline-flex md:space-x-4"
       >
         <VolumeDownIcon className="footerBtn" />
         <input

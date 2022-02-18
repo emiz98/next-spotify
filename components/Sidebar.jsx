@@ -5,6 +5,7 @@ import {
   PlusCircleIcon,
   RssIcon,
   SearchIcon,
+  VolumeUpIcon,
 } from '@heroicons/react/outline'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
@@ -29,10 +30,13 @@ function Sidebar() {
   return (
     <div
       className="hidden h-screen overflow-y-scroll 
-      border-r border-gray-900 p-5 text-sm text-gray-500 
+      border-r border-gray-900 p-5 text-sm text-gray-400 
     scrollbar-hide md:inline-flex md:max-w-[14rem] lg:max-w-[18rem]"
     >
       <div className="space-y-4">
+        <div>
+          <img className="w-3/5 pb-5" src="/assets/s_h.png" alt="" />
+        </div>
         <button className="flex items-center space-x-2 hover:text-white">
           <HomeIcon className="h-5 w-5" />
           <p>Home</p>
@@ -41,11 +45,10 @@ function Sidebar() {
           <SearchIcon className="h-5 w-5" />
           <p>Search</p>
         </button>
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button className="flex items-center space-x-2 pb-6 hover:text-white">
           <LibraryIcon className="h-5 w-5" />
           <p>Your Library</p>
         </button>
-        <hr className="border-t-[0.1px] border-gray-900" />
 
         <button className="flex items-center space-x-2 hover:text-white">
           <PlusCircleIcon className="h-5 w-5" />
@@ -55,20 +58,21 @@ function Sidebar() {
           <HeartIcon className="h-5 w-5" />
           <p>Liked Songs</p>
         </button>
-        <button className="flex items-center space-x-2 hover:text-white">
-          <RssIcon className="h-5 w-5" />
-          <p>Your episodes</p>
-        </button>
-        <hr className="border-t-[0.1px] border-gray-900" />
+        <hr className="border-t-[0.1px] border-gray-800" />
 
         {/* Playlists */}
         {playlists.map((playlist) => (
           <p
             key={playlist.id}
             onClick={() => setPlaylistId(playlist.id)}
-            className="cursor-pointer truncate hover:text-white md:max-w-[12rem] lg:max-w-[16rem]"
+            className={`flex cursor-pointer justify-between  hover:text-white md:max-w-[12rem] lg:max-w-[16rem] ${
+              playlist.id == playlistId && 'text-white'
+            }`}
           >
-            {playlist.name}
+            <span className="w-4/5 truncate">{playlist.name}</span>
+            {playlist.id == playlistId && (
+              <VolumeUpIcon className="footerBtn !h-4" />
+            )}
           </p>
         ))}
       </div>

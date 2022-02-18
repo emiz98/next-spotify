@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil'
 import { millisToMinutesAndSeconds } from '../lib/time'
 import { currentTrackIdState, isPlayingState } from '../atoms/songAtom'
 import useSpotify from '../hooks/useSpotify'
+import Moment from 'react-moment'
 
 function Song({ order, track }) {
   const spotifyApi = useSpotify()
@@ -36,7 +37,13 @@ function Song({ order, track }) {
           width={40}
         />
         <div>
-          <p className="w-36 truncate text-white lg:w-64">
+          <p
+            className={`w-36 truncate font-medium lg:w-64 ${
+              currentTrackId == track?.track?.id
+                ? 'text-green-500'
+                : 'text-white'
+            }`}
+          >
             {track?.track?.name}
           </p>
           <p className="w-40">{track?.track?.artists[0].name}</p>
@@ -44,7 +51,14 @@ function Song({ order, track }) {
       </div>
 
       <div className="ml-auto flex items-center justify-between md:ml-0">
-        <p className="hidden w-40 md:inline">{track?.track?.album?.name}</p>
+        <p className="hidden w-40 truncate md:inline">
+          {track?.track?.album?.name}
+        </p>
+        <p className="hidden w-40 md:inline">
+          <Moment className="text-md pr-5" fromNow>
+            {track?.added_at}
+          </Moment>
+        </p>
         <p>{millisToMinutesAndSeconds(track?.track?.duration_ms)}</p>
       </div>
     </div>

@@ -1,10 +1,11 @@
-import { ChevronDownIcon } from '@heroicons/react/outline'
+import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/outline'
 import { signOut, useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { playlistIdState, selectedPlaylist } from '../atoms/playlistAtom'
 import useSpotify from '../hooks/useSpotify'
 import Songs from '../components/Songs'
+import { ChevronLeftIcon } from '@heroicons/react/solid'
 
 function Center() {
   const { data: session } = useSession()
@@ -39,6 +40,21 @@ function Center() {
           <ChevronDownIcon className="h-5 w-5" />
         </div>
       </header>
+
+      <div className="absolute top-5 left-80 hidden text-white md:inline-flex">
+        <div
+          className="mr-3 rounded-full bg-black
+        p-2 transition duration-200 ease-in-out hover:bg-gray-800"
+        >
+          <ChevronLeftIcon className="footerBtn" />
+        </div>
+        <div
+          className="rounded-full bg-black p-2
+        transition duration-200 ease-in-out hover:bg-gray-800"
+        >
+          <ChevronRightIcon className="footerBtn" />
+        </div>
+      </div>
 
       <section
         className={`flex h-80 items-end space-x-7 
